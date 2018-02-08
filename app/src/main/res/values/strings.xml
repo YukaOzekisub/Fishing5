@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Fishing5</string>
+    <string name="find_fishing_ground" translatable="false">漁場を探す</string>
+    <string name="button">Button</string>
+    <string name="description">camera picture</string>
+</resources>

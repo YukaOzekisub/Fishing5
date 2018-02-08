@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.ozeki.fishing5.FishingActivity">
+
+    <FrameLayout android:layout_width="fill_parent"
+        android:id="@+id/frameLayout2"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/target_location_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:visibility="visible" />
+        <ImageView
+            android:id="@+id/target_location_button"
+            android:layout_width="65dp"
+            android:layout_height="75dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/frameLayout2"
+            android:layout_marginStart="114dp"
+            android:layout_marginTop="86dp"
+            android:scaleType="fitStart"
+            android:background="@null"
+            android:src="@drawable/location" />
+
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>
