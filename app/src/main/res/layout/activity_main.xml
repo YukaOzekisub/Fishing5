@@ -4,20 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#c5eefd"
     tools:context="com.example.ozeki.fishing5.MainActivity">
 
     <Button
         android:id="@+id/find_fishing_ground"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="232dp"
-        android:layout_marginEnd="148dp"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="231dp"
+        android:layout_marginBottom="136dp"
+        android:layout_marginEnd="252dp"
+        android:layout_marginStart="252dp"
+        android:layout_marginTop="383dp"
+        android:background="@drawable/shape_rounded_corners_10dp"
         android:text="@string/find_fishing_ground"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.894" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:scaleType="fitEnd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/background" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="209dp"
+        android:layout_height="128dp"
+        android:layout_marginEnd="318dp"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="31dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:srcCompat="@drawable/fish1" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="194dp"
+        android:layout_height="77dp"
+        android:layout_marginEnd="58dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="82dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/fish2" />
+
 </android.support.constraint.ConstraintLayout>
