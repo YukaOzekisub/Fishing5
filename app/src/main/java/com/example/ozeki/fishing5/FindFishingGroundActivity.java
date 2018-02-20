@@ -25,6 +25,7 @@ import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 import java.io.ByteArrayOutputStream;
@@ -162,7 +163,8 @@ public class FindFishingGroundActivity extends Activity implements CameraBridgeV
 
         // 円を検出する部分
         Mat gray = new Mat(inputFrame.rows(), inputFrame.cols(), CvType.CV_8SC1);
-        Imgproc.cvtColor(inputFrame, gray, Imgproc.COLOR_RGB2GRAY);
+        Imgproc.GaussianBlur(inputFrame, gray, new Size(3, 3), 0, 0);
+        Imgproc.cvtColor(gray, gray, Imgproc.COLOR_RGB2GRAY);
 
         Mat circles = new Mat();// 検出した円の情報格納する変数
 
@@ -190,13 +192,21 @@ public class FindFishingGroundActivity extends Activity implements CameraBridgeV
 
         Log.d("長さ","" + screen_height );
         location_pt = new Point();
+        Point location_pt_tmp = new Point();
+        double radius_tmp = 0;
         // 検出した直線上を緑線で塗る
         if(circles.cols() > 0) {
             double data[] = circles.get(0, 0);
+            location_pt_tmp.x = data[0];
+            location_pt_tmp.y = data[1];
+            radius_tmp = data[2];
+
+            Imgproc.circle(inputFrame, location_pt_tmp, (int) radius_tmp, new Scalar(0,153,255), -1);
+            location_frame = inputFrame.clone();
+
             location_pt.x = data[0];
             location_pt.y = data[1];
             radius = data[2];
-            Imgproc.circle(inputFrame, location_pt, (int) radius, new Scalar(0,153,255), -1);
 
             handler.post(new Runnable() {
                 @Override
@@ -218,8 +228,7 @@ public class FindFishingGroundActivity extends Activity implements CameraBridgeV
                     location_button.setVisibility(View.VISIBLE);
                 }
             });
-            location_frame = inputFrame;
-            return location_frame;
+            return inputFrame;
         }
 
         handler.post(new Runnable() {
