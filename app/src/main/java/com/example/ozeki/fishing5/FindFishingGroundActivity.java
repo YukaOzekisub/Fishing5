@@ -201,8 +201,8 @@ public class FindFishingGroundActivity extends Activity implements CameraBridgeV
             location_pt_tmp.y = data[1];
             radius_tmp = data[2];
 
-            Imgproc.circle(inputFrame, location_pt_tmp, (int) radius_tmp, new Scalar(0,153,255), -1);
             location_frame = inputFrame.clone();
+            Imgproc.circle(inputFrame, location_pt_tmp, (int) radius_tmp, new Scalar(0,153,255), -1);
 
             location_pt.x = data[0];
             location_pt.y = data[1];

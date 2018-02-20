@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +22,9 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import me.drakeet.materialdialog.MaterialDialog;
 
@@ -55,10 +62,21 @@ public class FishingActivity extends AppCompatActivity {
             target_location_frame = BitmapFactory.decodeByteArray(b, 0, b.length).copy(Bitmap.Config.ARGB_8888, true);
         }
 
-        fishing_cat = (ImageView) findViewById(R.id.fishing_cat);
-        fishing_cat.setVisibility(View.INVISIBLE);
-        light = (ImageView) findViewById(R.id.light);
-        light.setVisibility(View.INVISIBLE);
+        ImageView target_location_button = findViewById(R.id.target_location_button);
+        Intent intent = getIntent();
+        target_radius = intent.getDoubleExtra("target_radius", 0);
+        target_location_pt_x = intent.getDoubleExtra("target_location_pt_x", 0);
+        target_location_pt_y = intent.getDoubleExtra("target_location_pt_y", 0);
+
+
+        Canvas canvas = new Canvas(target_location_frame);
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setColor(Color.parseColor("#0099ff"));
+        paint.setStyle(Paint.Style.FILL);
+        canvas.drawCircle((float)target_location_pt_x, (float)target_location_pt_y, (float)target_radius, paint);
+
+
         turizao = (ImageView) findViewById(R.id.turizao);
         turizao.setVisibility(View.INVISIBLE);
         result_button = (Button) findViewById(R.id.result_button);
@@ -66,12 +84,6 @@ public class FishingActivity extends AppCompatActivity {
 
         location_frame = findViewById(R.id.target_location_view);
         location_frame.setImageBitmap(target_location_frame);
-
-        ImageView target_location_button = findViewById(R.id.target_location_button);
-        Intent intent = getIntent();
-        target_radius = intent.getDoubleExtra("target_radius", 0);
-        target_location_pt_x = intent.getDoubleExtra("target_location_pt_x", 0);
-        target_location_pt_y = intent.getDoubleExtra("target_location_pt_y", 0);
 
         //ボタンのRelativeLayoutの子要素指定
         int buttonWidth = target_location_button.getLayoutParams().width;
@@ -88,9 +100,22 @@ public class FishingActivity extends AppCompatActivity {
         target_location_button.setLayoutParams(buttonLayoutParams);
         target_location_button.setVisibility(View.VISIBLE);
 
+        /**************
+        *　タイマーの処理
+        ****************/
+        // 3
+        long countNumber = 3500;
+        // インターバル msec
+        long interval = 10;
+
+        // インスタンス生成
+        // CountDownTimer(long millisInFuture, long countDownInterval)
+        final CountDown countDown = new CountDown(countNumber, interval);
+
         findViewById(R.id.start_fishing_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                countDown.start();
                 findViewById(R.id.start_fishing_button).setVisibility(View.INVISIBLE);
                 findViewById(R.id.return_button).setVisibility(View.INVISIBLE);
                 findViewById(R.id.target_location_button).setVisibility(View.INVISIBLE);
@@ -131,16 +156,33 @@ public class FishingActivity extends AppCompatActivity {
         AnimationDrawable turizaoAnimation = (AnimationDrawable) turizao.getBackground();
         // アニメーションの開始
         turizaoAnimation.start();
+    }
 
-        result_button.setVisibility(View.VISIBLE);
-        result_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //画面遷移
-                Intent intent = new Intent(FishingActivity.this, ResultActivity.class);
-                intent.putExtra("target_radius", target_radius);
-                startActivity(intent);
-            }
-        });
+    class CountDown extends CountDownTimer {
+
+        CountDown(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onFinish() {
+            // 完了
+            result_button.setVisibility(View.VISIBLE);
+            result_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //画面遷移
+                    Intent intent = new Intent(FishingActivity.this, ResultActivity.class);
+                    intent.putExtra("target_radius", target_radius);
+                    startActivity(intent);
+                }
+            });
+        }
+
+        // インターバルで呼ばれる
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+        }
     }
 }
