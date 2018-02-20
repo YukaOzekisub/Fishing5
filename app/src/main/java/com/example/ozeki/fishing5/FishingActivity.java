@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import me.drakeet.materialdialog.MaterialDialog;
+
 public class FishingActivity extends AppCompatActivity {
 
     SharedPreferences pref;
@@ -43,6 +45,7 @@ public class FishingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fishing);
+
 
         pref = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
         String s = pref.getString("fishing_ground", "");
@@ -70,9 +73,6 @@ public class FishingActivity extends AppCompatActivity {
         target_location_pt_x = intent.getDoubleExtra("target_location_pt_x", 0);
         target_location_pt_y = intent.getDoubleExtra("target_location_pt_y", 0);
 
-        Log.d("ポイントx", ""+target_location_pt_x);
-        Log.d("ポイントy", ""+target_location_pt_y);
-
         //ボタンのRelativeLayoutの子要素指定
         int buttonWidth = target_location_button.getLayoutParams().width;
         int buttonHeight = target_location_button.getLayoutParams().height;
@@ -92,6 +92,7 @@ public class FishingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 findViewById(R.id.start_fishing_button).setVisibility(View.INVISIBLE);
+                findViewById(R.id.return_button).setVisibility(View.INVISIBLE);
                 findViewById(R.id.target_location_button).setVisibility(View.INVISIBLE);
                 start_fishing(view);
             }
@@ -117,7 +118,7 @@ public class FishingActivity extends AppCompatActivity {
 
         fishingImageLayoutParams.setMargins(
                 (int)(location_frame.getPaddingLeft() + target_location_pt_x + target_radius + (fishing_image_width/2)),
-                (int)(location_frame.getPaddingTop() + target_location_pt_y - target_radius - (fishing_image_height/2)),
+                (int)(location_frame.getPaddingTop() + target_location_pt_y - fishing_image_height),
                 fishingImageLayoutParams.rightMargin,
                 fishingImageLayoutParams.bottomMargin
         );

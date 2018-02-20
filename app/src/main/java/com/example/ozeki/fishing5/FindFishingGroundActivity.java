@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Base64;
@@ -27,6 +28,7 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
 import java.io.ByteArrayOutputStream;
+import me.drakeet.materialdialog.MaterialDialog;
 
 public class FindFishingGroundActivity extends Activity implements CameraBridgeViewBase.CvCameraViewListener {
 
@@ -50,6 +52,8 @@ public class FindFishingGroundActivity extends Activity implements CameraBridgeV
     int displayWidthPixel;
 
     boolean run_camera;
+
+    MaterialDialog mMaterialDialog;
 
     SharedPreferences pref;
 
@@ -76,6 +80,18 @@ public class FindFishingGroundActivity extends Activity implements CameraBridgeV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_fishing_ground);
+
+        mMaterialDialog = new MaterialDialog(this);
+        mMaterialDialog.setTitle("釣り場を探そう！");
+        mMaterialDialog.setMessage("カメラで円を探そう！\n青い円が描画されるのでアイコンをタップしよう！");
+        mMaterialDialog.setPositiveButton("OK", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMaterialDialog.dismiss();
+            }
+        });
+        mMaterialDialog.setBackgroundResource(R.drawable.dialog_background);
+        mMaterialDialog.show();
 
         displayHeightPixel = getResources().getDisplayMetrics().heightPixels;
         displayWidthPixel = getResources().getDisplayMetrics().widthPixels;
@@ -174,14 +190,13 @@ public class FindFishingGroundActivity extends Activity implements CameraBridgeV
 
         Log.d("長さ","" + screen_height );
         location_pt = new Point();
-        location_frame = inputFrame;
         // 検出した直線上を緑線で塗る
         if(circles.cols() > 0) {
             double data[] = circles.get(0, 0);
             location_pt.x = data[0];
             location_pt.y = data[1];
             radius = data[2];
-            Imgproc.circle(location_frame, location_pt, (int) radius, new Scalar(0,153,255), -1);
+            Imgproc.circle(inputFrame, location_pt, (int) radius, new Scalar(0,153,255), -1);
 
             handler.post(new Runnable() {
                 @Override
@@ -203,22 +218,17 @@ public class FindFishingGroundActivity extends Activity implements CameraBridgeV
                     location_button.setVisibility(View.VISIBLE);
                 }
             });
-/*
-            Log.d("デバッグ", "width:"+ mCameraView.getWidth());
-            Log.d("デバッグ", "height:"+ mCameraView.getHeight() );
-            Log.d("デバッグ", "ボタンwidth:"+ buttonWidth);
-            Log.d("デバッグ", "ボタンheight:"+ buttonHeight);
-            */
-        } else {
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    location_button.setVisibility(View.INVISIBLE);
-                }
-            });
+            location_frame = inputFrame;
+            return location_frame;
         }
 
-        return location_frame;
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                location_button.setVisibility(View.INVISIBLE);
+            }
+        });
+        return inputFrame;
     }
 
     public interface CvCameraViewFrame {
