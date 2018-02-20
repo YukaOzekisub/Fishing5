@@ -111,42 +111,18 @@ public class FishingActivity extends AppCompatActivity {
         //釣り始め
 
         //猫のパラメータ
-        int fishing_cat_width = 250;
-        int fishing_cat_height = 250;
-        FrameLayout.LayoutParams fishingCatLayoutParams = new FrameLayout.LayoutParams(fishing_cat_width, fishing_cat_height);
+        int fishing_image_width = 350;
+        int fishing_image_height = 350;
+        FrameLayout.LayoutParams fishingImageLayoutParams = new FrameLayout.LayoutParams(fishing_image_width, fishing_image_height);
 
-        //釣竿のパラメータ
-        int turizao_width = (int)(target_radius + 30);
-        int turizao_height = (int)((target_radius + 30) * 2 /3);
-        FrameLayout.LayoutParams turizaoLayoutParams = new FrameLayout.LayoutParams(turizao_width, turizao_height);
-
-        fishingCatLayoutParams.setMargins(
-                (int)(location_frame.getPaddingLeft() + target_location_pt_x + fishing_cat_width + turizao_width),
-                (int)(location_frame.getPaddingTop() + target_location_pt_y - (turizao_height * 1 /3) -fishing_cat_height),
-                fishingCatLayoutParams.rightMargin,
-                fishingCatLayoutParams.bottomMargin
+        fishingImageLayoutParams.setMargins(
+                (int)(location_frame.getPaddingLeft() + target_location_pt_x + target_radius + (fishing_image_width/2)),
+                (int)(location_frame.getPaddingTop() + target_location_pt_y - target_radius - (fishing_image_height/2)),
+                fishingImageLayoutParams.rightMargin,
+                fishingImageLayoutParams.bottomMargin
         );
 
-        turizaoLayoutParams.setMargins(
-                (int)(location_frame.getPaddingLeft() + target_location_pt_x + turizao_width),
-                (int)(location_frame.getPaddingTop() + target_location_pt_y - turizao_height),
-                turizaoLayoutParams.rightMargin,
-                turizaoLayoutParams.bottomMargin
-        );
-
-        Log.d("cat_left",""+(int)(location_frame.getPaddingLeft() + target_location_pt_x + fishing_cat_width + turizao_width));
-        Log.d("cat_top", ""+(int)(location_frame.getPaddingTop() + target_location_pt_y - (turizao_height * 1 /3) -fishing_cat_height));
-        Log.d("turizao_left",""+(int)(location_frame.getPaddingLeft() + target_location_pt_x + turizao_width));
-        Log.d("turizao_top",""+(int)(location_frame.getPaddingTop() + target_location_pt_y - turizao_height));
-
-        Log.d("target_x",""+(int)(location_frame.getPaddingLeft() + target_location_pt_x));
-        Log.d("target_y",""+(int)(location_frame.getPaddingTop() + target_location_pt_y));
-
-        fishing_cat.setImageResource(R.drawable.neko_sit_gray);
-        fishing_cat.setLayoutParams(fishingCatLayoutParams);
-        fishing_cat.setVisibility(View.VISIBLE);
-
-        turizao.setLayoutParams(turizaoLayoutParams);
+        turizao.setLayoutParams(fishingImageLayoutParams);
         turizao.setVisibility(View.VISIBLE);
         //釣竿のアニメーション
         turizao.setBackground(ContextCompat.getDrawable(FishingActivity.this, R.drawable.turizao_animation));
@@ -154,29 +130,6 @@ public class FishingActivity extends AppCompatActivity {
         AnimationDrawable turizaoAnimation = (AnimationDrawable) turizao.getBackground();
         // アニメーションの開始
         turizaoAnimation.start();
-
-        //電球つける
-        int light_width = 80;
-        int light_height = 80;
-        FrameLayout.LayoutParams lightLayoutParams = new FrameLayout.LayoutParams(light_width, light_height);
-
-        lightLayoutParams.setMargins(
-                (int)(location_frame.getPaddingLeft() + target_location_pt_x + target_radius + fishing_cat_width + turizao_width),
-                (int)(location_frame.getPaddingTop() + target_location_pt_y - turizao_height - light_height),
-                turizaoLayoutParams.rightMargin,
-                turizaoLayoutParams.bottomMargin
-        );
-
-
-        light.setLayoutParams(lightLayoutParams);
-        light.setVisibility(View.VISIBLE);
-
-        //ライトのアニメーション
-        light.setBackground(ContextCompat.getDrawable(FishingActivity.this, R.drawable.light_animation));
-        // AnimationDrawableを取得
-        AnimationDrawable lightAnimation = (AnimationDrawable) turizao.getBackground();
-        // アニメーションの開始
-        lightAnimation.start();
 
         result_button.setVisibility(View.VISIBLE);
         result_button.setOnClickListener(new View.OnClickListener() {

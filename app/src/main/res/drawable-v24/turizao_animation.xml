@@ -1,11 +1,11 @@
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:oneshot="true"
-    android:visible="false">
+    android:visible="true">
 
     <item
-        android:drawable="@drawable/turizao"
+        android:drawable="@drawable/neko_turi1"
         android:duration="2000" />
     <item
-        android:drawable="@drawable/turizao2"
+        android:drawable="@drawable/neko_turi2"
         android:duration="2000" />
 </animation-list>
