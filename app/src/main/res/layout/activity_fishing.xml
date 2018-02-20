@@ -7,30 +7,47 @@
     android:background="#c5eefd"
     tools:context="com.example.ozeki.fishing5.FishingActivity">
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="fill_parent"
-        android:layout_height="200dp"
-        android:scaleType="fitEnd"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/background" />
-
     <Button
         android:id="@+id/start_fishing_button"
-        android:layout_width="158dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
-        android:layout_marginEnd="217dp"
-        android:layout_marginStart="217dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="231dp"
         android:background="@drawable/shape_rounded_corners_10dp"
         android:text="@string/start_fishing"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/return_button"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/return_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="88dp"
+        android:background="@drawable/shape_rounded_corners_10dp"
+        android:text="やっぱりやめる"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/result_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="217dp"
+        android:layout_marginStart="217dp"
+        android:background="@drawable/shape_rounded_corners_10dp"
+        android:text="結果を見る"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <FrameLayout
@@ -59,23 +76,18 @@
         <ImageView
             android:id="@+id/fishing_cat"
             android:layout_width="150dp"
-            android:layout_height="150dp"
-            tools:layout_editor_absoluteX="433dp"
-            tools:layout_editor_absoluteY="198dp" />
+            android:layout_height="150dp"/>
 
         <ImageView
             android:id="@+id/light"
             android:layout_width="50dp"
-            android:layout_height="50dp"
-            tools:layout_editor_absoluteX="433dp"
-            tools:layout_editor_absoluteY="198dp" />
+            android:layout_height="50dp" />
 
         <ImageView
             android:id="@+id/turizao"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            tools:layout_editor_absoluteX="433dp"
-            tools:layout_editor_absoluteY="198dp" />
+            android:scaleType="fitXY" />
 
     </FrameLayout>
 

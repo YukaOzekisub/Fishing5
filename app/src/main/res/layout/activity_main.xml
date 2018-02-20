@@ -7,10 +7,24 @@
     android:background="#c5eefd"
     tools:context="com.example.ozeki.fishing5.MainActivity">
 
-    <Button
-        android:id="@+id/find_fishing_ground"
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="192dp"
+        android:layout_marginStart="192dp"
+        android:layout_marginTop="109dp"
+        android:text="釣り場探し"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/find_fishing_ground"
+        android:layout_width="106dp"
+        android:layout_height="51dp"
         android:layout_marginBottom="136dp"
         android:layout_marginEnd="252dp"
         android:layout_marginStart="252dp"
@@ -21,16 +35,15 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.894" />
+        app:layout_constraintVertical_bias="0.887" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="fill_parent"
         android:layout_height="200dp"
-        android:scaleType="fitEnd"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,23 +53,19 @@
         android:id="@+id/imageView2"
         android:layout_width="209dp"
         android:layout_height="128dp"
-        android:layout_marginEnd="318dp"
-        android:layout_marginStart="65dp"
-        android:layout_marginTop="31dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/fish1" />
 
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="194dp"
-        android:layout_height="77dp"
-        android:layout_marginEnd="58dp"
-        android:layout_marginStart="66dp"
-        android:layout_marginTop="82dp"
+        android:layout_width="163dp"
+        android:layout_height="69dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="72dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/fish2" />
 

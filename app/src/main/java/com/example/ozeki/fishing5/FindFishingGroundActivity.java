@@ -49,6 +49,8 @@ public class FindFishingGroundActivity extends Activity implements CameraBridgeV
     int displayHeightPixel;
     int displayWidthPixel;
 
+    boolean run_camera;
+
     SharedPreferences pref;
 
     private Handler handler = new Handler();
@@ -92,6 +94,9 @@ public class FindFishingGroundActivity extends Activity implements CameraBridgeV
 
         location_button.setLayoutParams(buttonLayoutParams);
 
+        //カメラストップ用
+        run_camera = true;
+
         // カメラビューのインスタンスを変数にバインド
         mCameraView = (CameraBridgeViewBase) findViewById(R.id.camera_view);
         // リスナーの設定 (後述)
@@ -100,6 +105,7 @@ public class FindFishingGroundActivity extends Activity implements CameraBridgeV
         location_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                run_camera = false;
                 check_location(view);
             }
         });
@@ -135,6 +141,9 @@ public class FindFishingGroundActivity extends Activity implements CameraBridgeV
     // フレームをキャプチャする毎(30fpsなら毎秒30回)に呼ばれる
     @Override
     public Mat onCameraFrame(Mat inputFrame) {
+
+        if(!run_camera){ return location_frame; }
+
         // 円を検出する部分
         Mat gray = new Mat(inputFrame.rows(), inputFrame.cols(), CvType.CV_8SC1);
         Imgproc.cvtColor(inputFrame, gray, Imgproc.COLOR_RGB2GRAY);
@@ -159,7 +168,7 @@ public class FindFishingGroundActivity extends Activity implements CameraBridgeV
                 (screen_height * 2) / 3, //円の中心同士の最小距離
                 160,
                 50,
-                40,
+                screen_height / 6,
                 screen_height / 3
         );
 
@@ -172,7 +181,7 @@ public class FindFishingGroundActivity extends Activity implements CameraBridgeV
             location_pt.x = data[0];
             location_pt.y = data[1];
             radius = data[2];
-            Imgproc.circle(inputFrame, location_pt, (int) radius, new Scalar(0, 200, 0), 5);
+            Imgproc.circle(location_frame, location_pt, (int) radius, new Scalar(20, 40, 200), -1);
 
             handler.post(new Runnable() {
                 @Override

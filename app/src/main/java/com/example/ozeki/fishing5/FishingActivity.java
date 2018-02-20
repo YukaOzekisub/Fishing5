@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -31,6 +32,8 @@ public class FishingActivity extends AppCompatActivity {
     ImageView fishing_cat;
     ImageView light;
     ImageView turizao;
+
+    Button result_button;
 
     private TranslateAnimation translateAnimation;
 
@@ -55,6 +58,8 @@ public class FishingActivity extends AppCompatActivity {
         light.setVisibility(View.INVISIBLE);
         turizao = (ImageView) findViewById(R.id.turizao);
         turizao.setVisibility(View.INVISIBLE);
+        result_button = (Button) findViewById(R.id.result_button);
+        result_button.setVisibility(View.INVISIBLE);
 
         location_frame = findViewById(R.id.target_location_view);
         location_frame.setImageBitmap(target_location_frame);
@@ -87,46 +92,62 @@ public class FishingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 findViewById(R.id.start_fishing_button).setVisibility(View.INVISIBLE);
+                findViewById(R.id.target_location_button).setVisibility(View.INVISIBLE);
                 start_fishing(view);
+            }
+        });
+
+        findViewById(R.id.return_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(FishingActivity.this, FindFishingGroundActivity.class);
+                startActivity(intent);
             }
         });
 
     }
 
     private void start_fishing(View view){
-
         //釣り始め
+
+        //猫のパラメータ
         int fishing_cat_width = 250;
         int fishing_cat_height = 250;
         FrameLayout.LayoutParams fishingCatLayoutParams = new FrameLayout.LayoutParams(fishing_cat_width, fishing_cat_height);
 
+        //釣竿のパラメータ
+        int turizao_width = (int)(target_radius + 30);
+        int turizao_height = (int)((target_radius + 30) * 2 /3);
+        FrameLayout.LayoutParams turizaoLayoutParams = new FrameLayout.LayoutParams(turizao_width, turizao_height);
+
         fishingCatLayoutParams.setMargins(
-                (int)(location_frame.getPaddingLeft() + target_location_pt_x + target_radius + fishing_cat_width),
-                (int)(location_frame.getPaddingTop() + target_location_pt_y - fishing_cat_height),
+                (int)(location_frame.getPaddingLeft() + target_location_pt_x + fishing_cat_width + turizao_width),
+                (int)(location_frame.getPaddingTop() + target_location_pt_y - (turizao_height * 1 /3) -fishing_cat_height),
                 fishingCatLayoutParams.rightMargin,
                 fishingCatLayoutParams.bottomMargin
         );
+
+        turizaoLayoutParams.setMargins(
+                (int)(location_frame.getPaddingLeft() + target_location_pt_x + turizao_width),
+                (int)(location_frame.getPaddingTop() + target_location_pt_y - turizao_height),
+                turizaoLayoutParams.rightMargin,
+                turizaoLayoutParams.bottomMargin
+        );
+
+        Log.d("cat_left",""+(int)(location_frame.getPaddingLeft() + target_location_pt_x + fishing_cat_width + turizao_width));
+        Log.d("cat_top", ""+(int)(location_frame.getPaddingTop() + target_location_pt_y - (turizao_height * 1 /3) -fishing_cat_height));
+        Log.d("turizao_left",""+(int)(location_frame.getPaddingLeft() + target_location_pt_x + turizao_width));
+        Log.d("turizao_top",""+(int)(location_frame.getPaddingTop() + target_location_pt_y - turizao_height));
+
+        Log.d("target_x",""+(int)(location_frame.getPaddingLeft() + target_location_pt_x));
+        Log.d("target_y",""+(int)(location_frame.getPaddingTop() + target_location_pt_y));
 
         fishing_cat.setImageResource(R.drawable.neko_sit_gray);
         fishing_cat.setLayoutParams(fishingCatLayoutParams);
         fishing_cat.setVisibility(View.VISIBLE);
 
-        //釣り始め
-        int turizao_width = 120;
-        int turizao_height = 180;
-        FrameLayout.LayoutParams turizaoLayoutParams = new FrameLayout.LayoutParams(turizao_width, turizao_height);
-
-        turizaoLayoutParams.setMargins(
-                (int)(location_frame.getPaddingLeft() + target_location_pt_x + target_radius + (fishing_cat_width/2)),
-                (int)(location_frame.getPaddingTop() + target_location_pt_y - (fishing_cat_height/2)),
-                fishingCatLayoutParams.rightMargin,
-                fishingCatLayoutParams.bottomMargin
-        );
-
-
         turizao.setLayoutParams(turizaoLayoutParams);
         turizao.setVisibility(View.VISIBLE);
-
         //釣竿のアニメーション
         turizao.setBackground(ContextCompat.getDrawable(FishingActivity.this, R.drawable.turizao_animation));
         // AnimationDrawableを取得
@@ -140,10 +161,10 @@ public class FishingActivity extends AppCompatActivity {
         FrameLayout.LayoutParams lightLayoutParams = new FrameLayout.LayoutParams(light_width, light_height);
 
         lightLayoutParams.setMargins(
-                (int)(location_frame.getPaddingLeft() + target_location_pt_x + target_radius + fishing_cat_width),
-                (int)(location_frame.getPaddingTop() + target_location_pt_y - fishing_cat_height),
-                fishingCatLayoutParams.rightMargin,
-                fishingCatLayoutParams.bottomMargin
+                (int)(location_frame.getPaddingLeft() + target_location_pt_x + target_radius + fishing_cat_width + turizao_width),
+                (int)(location_frame.getPaddingTop() + target_location_pt_y - turizao_height - light_height),
+                turizaoLayoutParams.rightMargin,
+                turizaoLayoutParams.bottomMargin
         );
 
 
@@ -156,11 +177,16 @@ public class FishingActivity extends AppCompatActivity {
         AnimationDrawable lightAnimation = (AnimationDrawable) turizao.getBackground();
         // アニメーションの開始
         lightAnimation.start();
-/*
-        //画面遷移
-        Intent intent = new Intent(FishingActivity.this, ResultActivity.class);
-        intent.putExtra("target_radius", target_radius);
-        startActivity(intent);
-*/
+
+        result_button.setVisibility(View.VISIBLE);
+        result_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //画面遷移
+                Intent intent = new Intent(FishingActivity.this, ResultActivity.class);
+                intent.putExtra("target_radius", target_radius);
+                startActivity(intent);
+            }
+        });
     }
 }

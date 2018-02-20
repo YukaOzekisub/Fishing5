@@ -32,8 +32,12 @@
         <activity
             android:name=".FindFishingGroundActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".FishingActivity" />
-        <activity android:name=".ResultActivity"></activity>
+        <activity
+            android:name=".FishingActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".ResultActivity"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>

@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">Fishing5</string>
-    <string name="find_fishing_ground" translatable="false">漁場を探す</string>
+    <string name="app_name">釣り場探し</string>
+    <string name="find_fishing_ground" translatable="false">釣り場を探す</string>
     <string name="button">Button</string>
     <string name="description">camera picture</string>
     <string name="start_fishing">ここで釣りをする！</string>
+    <string name="view_result" translatable="false" />
 </resources>
